@@ -1,5 +1,5 @@
-create database catraca;
-use catraca;
+CREATE DATABASE catraca;
+USE catraca;
 
 CREATE TABLE tb_administradores (
   id_adm INT PRIMARY KEY AUTO_INCREMENT,
@@ -10,7 +10,7 @@ CREATE TABLE tb_administradores (
   dataCad_adm TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 
-INSERT INTO tb_administradores(nome_adm, usuario_adm, email_adm, senha_adm) 
+INSERT INTO tb_administradores (nome_adm, usuario_adm, email_adm, senha_adm) 
 VALUES ('matheus', 'a', 'matheus@aa.com', '123');
 
 CREATE TABLE tb_cadUsuario (
@@ -22,36 +22,44 @@ CREATE TABLE tb_cadUsuario (
   dataCad_Usuario TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 
-INSERT INTO tb_cadUsuario(nome_Usuario, email_Usuario, senha_Usuario) 
+INSERT INTO tb_cadUsuario (nome_Usuario, email_Usuario, senha_Usuario) 
 VALUES ('1', 'matheus@aa.com', '123');
-
-CREATE TABLE tb_reclamacao (
-  id_reclamacao INT PRIMARY KEY AUTO_INCREMENT,
-  texto_reclamacao VARCHAR(255),
-  nome_reclamacao VARCHAR(255)
-);
 
 CREATE TABLE tb_funcionarios (
   id_funcionario INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  nome_funcionario VARCHAR(80) NOT NULL,
+  nome_funcionario VARCHAR(80) NOT NULL unique,
   email_funcionario VARCHAR(100) NOT NULL,
   telefone_funcionario VARCHAR(20) NOT NULL,
   data_funcionario TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 
-INSERT INTO tb_funcionarios(nome_funcionario, email_funcionario, telefone_funcionario) 
+INSERT INTO tb_funcionarios (nome_funcionario, email_funcionario, telefone_funcionario) 
 VALUES ('Matheus', 'matheus@aa.com', '1111123');
 
 CREATE TABLE tb_entradas (
   id_entrada INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  id_funcionario_fk INT UNSIGNED NOT NULL,
+  id_funcionario INT UNSIGNED NOT NULL,
   dataEHoraEntrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-  FOREIGN KEY (id_funcionario_fk) REFERENCES tb_funcionarios(id_funcionario)
+  CONSTRAINT FK_entradas_funcionario FOREIGN KEY (id_entrada) REFERENCES tb_funcionarios(id_funcionario)
+);
+
+
+insert into tb_entradas values(
 );
 
 CREATE TABLE tb_saidas (
   id_saida INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  id_funcionario_fk INT UNSIGNED NOT NULL,
+  id_funcionario INT UNSIGNED NOT NULL,
   dataEHorasaida TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-  FOREIGN KEY (id_funcionario_fk) REFERENCES tb_funcionarios(id_funcionario)
+  CONSTRAINT FK_saidas_funcionario FOREIGN KEY (id_saida) REFERENCES tb_funcionarios(id_funcionario)
 );
+
+insert into tb_entradas values();
+
+
+SELECT a.nome_funcionario, b.dataEHoraEntrada, c.dataEHorasaida 
+FROM tb_funcionarios a 
+INNER JOIN tb_entradas b ON a.id_funcionario = b.id_funcionario 
+INNER JOIN tb_saidas c ON a.id_funcionario = c.id_funcionario;
+
+DROP TABLE tb_funcionarios;
