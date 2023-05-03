@@ -17,10 +17,15 @@ VALUES ('matheus', 'a', 'matheus@aa.com', '123');
 CREATE TABLE tb_funcionarios (
   id_funcionario INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nome_funcionario VARCHAR(80) NOT NULL unique,
+  dtNasc_funcionario VARCHAR(20) NOT NULL,
+  cpf_funcionario VARCHAR(30) not null,
+  rg_funcionario VARCHAR(30) not null,
+  genero_funcionario varchar (20) not null,
   email_funcionario VARCHAR(100) NOT NULL,
   telefone_funcionario VARCHAR(20) NOT NULL,
   data_funcionario TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
+drop table tb_funcionarios;
 
 INSERT INTO tb_funcionarios (nome_funcionario, email_funcionario, telefone_funcionario) 
 VALUES ('Matheus Dias de Souza', 'matheus@aa.com', '1111123');
